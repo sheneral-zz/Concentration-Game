@@ -4,7 +4,7 @@ import java.awt.event.*;
 
 public class MemoryGameGUI extends JFrame implements ActionListener{
      
-   private final int WINDOW_WIDTH = 500;  // Window width
+   private final int WINDOW_WIDTH = 540;  // Window width
    private final int WINDOW_HEIGHT = 500; // Window height
    private TextArea messageArea, attempts, attemptsLeft, matches;
    private int rows=0;
@@ -22,6 +22,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       // set layout and borders 
       setLayout(new BorderLayout());
       add(new JLabel(filler),BorderLayout.WEST);
+      add(new JLabel(filler),BorderLayout.EAST);
       add(new JLabel(filler),BorderLayout.NORTH);
       add(new JLabel(filler),BorderLayout.SOUTH);
       Panel doorsPanel = new Panel ();
@@ -39,56 +40,41 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       cols = dealGame.getCols();
       
       Panel rightPanel = new Panel ();
-      rightPanel.setLayout(new GridLayout(6,1));
+      rightPanel.setLayout(new GridLayout(9,1));
       
       rightPanel.add(new JLabel("Attempts"));
-      attempts = new TextArea("",1,5,TextArea.SCROLLBARS_NONE);
+      attempts = new TextArea("0",1,5,TextArea.SCROLLBARS_NONE);
       rightPanel.add(attempts);
-      //added code below S.G.
       attempts.setEditable(false);
       
+      rightPanel.add(new JLabel(filler));
+      
       rightPanel.add(new JLabel("Attempts Left"));
-      attemptsLeft = new TextArea("",1,5,TextArea.SCROLLBARS_NONE);
+      attemptsLeft = new TextArea("16",1,5,TextArea.SCROLLBARS_NONE);
       rightPanel.add(attemptsLeft);
-      //added code below S.G.
       attemptsLeft.setEditable(false);
       
-<<<<<<< Updated upstream
+      rightPanel.add(new JLabel(filler));
+      
       rightPanel.add(new JLabel("Matches Made"));
-      matches = new TextArea("",1,5,TextArea.SCROLLBARS_NONE); 
+      matches = new TextArea("0",1,5,TextArea.SCROLLBARS_NONE); 
       rightPanel.add(matches);
-      //added code below S.G.
       matches.setEditable(false);
+      
+      rightPanel.add(new JLabel(filler));
      
-=======
-   
-   
->>>>>>> Stashed changes
       
       add(rightPanel,BorderLayout.EAST);
       result = new JLabel(filler);  
       
       Panel bottomPanel = new Panel ();
       bottomPanel.setLayout(new GridLayout(1,1));
-      messageArea = new TextArea("", 10,15,TextArea.SCROLLBARS_NONE);
+      messageArea = new TextArea("    ", 10,15,TextArea.SCROLLBARS_NONE);
       add(bottomPanel,BorderLayout.SOUTH);
       messageArea.setEditable(false);
+      
       setVisible(true);
-<<<<<<< Updated upstream
-      } 
-      
-      public int updateAttempts(int numAttempts){
-         numAttempts++;
-         String s = numAttempts+"";
-         attempts.setText(s);
-         return numAttempts;
-      }
-=======
    } 
-      
-   //public void actionPerformed(ActionEvent ae){} 
-      
-      
       
    public int updateAttempts(int numAttempts){
       numAttempts++;
@@ -96,7 +82,6 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       attempts.setText(s);
       return numAttempts;
    }
->>>>>>> Stashed changes
 
 
    public int updateFoundMatches(int numMatches, boolean checkMatch){
@@ -121,25 +106,18 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
    }
 
       
-<<<<<<< Updated upstream
       //temporary action performed below S.G.     
-      public void actionPerformed(ActionEvent click){
+   public void actionPerformed(ActionEvent click){
    
-         JButton buttonClicked = (JButton)click.getSource(); 
-         int i=0;
-         while(buttonClicked != doors[i]){
-            i++; 
-         }
-         dealGame.takeTurn(i); 
-         
-         doors[i].setIcon(dealGame.get(i));
-
-         doors[i].removeActionListener(this);
+      JButton buttonClicked = (JButton)click.getSource(); 
+      int i=0;
+      while(buttonClicked != doors[i]){
+         i++; 
       }
+      dealGame.takeTurn(i); 
+         
+      doors[i].setIcon(dealGame.get(i));
+   
+      doors[i].removeActionListener(this);
+   }
 }
-=======
-      
-}
-
-
->>>>>>> Stashed changes
