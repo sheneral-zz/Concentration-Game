@@ -53,12 +53,17 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       //added code below S.G.
       attemptsLeft.setEditable(false);
       
+<<<<<<< Updated upstream
       rightPanel.add(new JLabel("Matches Made"));
       matches = new TextArea("",1,5,TextArea.SCROLLBARS_NONE); 
       rightPanel.add(matches);
       //added code below S.G.
       matches.setEditable(false);
      
+=======
+   
+   
+>>>>>>> Stashed changes
       
       add(rightPanel,BorderLayout.EAST);
       result = new JLabel(filler);  
@@ -69,6 +74,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       add(bottomPanel,BorderLayout.SOUTH);
       messageArea.setEditable(false);
       setVisible(true);
+<<<<<<< Updated upstream
       } 
       
       public int updateAttempts(int numAttempts){
@@ -77,6 +83,20 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
          attempts.setText(s);
          return numAttempts;
       }
+=======
+   } 
+      
+   //public void actionPerformed(ActionEvent ae){} 
+      
+      
+      
+   public int updateAttempts(int numAttempts){
+      numAttempts++;
+      String s = numAttempts+"";
+      attempts.setText(s);
+      return numAttempts;
+   }
+>>>>>>> Stashed changes
 
 
    public int updateFoundMatches(int numMatches, boolean checkMatch){
@@ -101,6 +121,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
    }
 
       
+<<<<<<< Updated upstream
       //temporary action performed below S.G.     
       public void actionPerformed(ActionEvent click){
    
@@ -116,3 +137,9 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
          doors[i].removeActionListener(this);
       }
 }
+=======
+      
+}
+
+
+>>>>>>> Stashed changes
