@@ -1,37 +1,46 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*; 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import java.awt.Color;
+
 
 public class MemoryGameGUI extends JFrame implements ActionListener{
      
-   private final int WINDOW_WIDTH = 540;  // Window width
-   private final int WINDOW_HEIGHT = 500; // Window height
+   private final int WINDOW_WIDTH = 900;  // Window width
+   private final int WINDOW_HEIGHT = 600; // Window height
    private TextArea messageArea, attempts, attemptsLeft, matches;
    private int rows=0;
    private int cols = 0; 
    private JButton [] doors  = new JButton[16];
    private GameModel dealGame; 
-   private String filler = "   "; 
+   private String filler = " "; 
    private JLabel result; 
+   private ImageIcon icon = new ImageIcon ("front.png");
 
    public MemoryGameGUI(){
       setTitle("4x4 Memory Game");
       setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+      setColor(1,200,1);
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       
       // set layout and borders 
-      setLayout(new BorderLayout());
+      setLayout(new BorderLayout(15,15));
       add(new JLabel(filler),BorderLayout.WEST);
       add(new JLabel(filler),BorderLayout.EAST);
       add(new JLabel(filler),BorderLayout.NORTH);
       add(new JLabel(filler),BorderLayout.SOUTH);
+      add(new JLabel(filler),BorderLayout.CENTER);
+      
       Panel doorsPanel = new Panel ();
-      doorsPanel.setLayout(new GridLayout(4,4));
+      doorsPanel.setLayout(new GridLayout(4,4,5,5));
+      
+      
       for(int i=0;i<16;i++){
-         String doorNum = i+1+""; 
-         doors[i] = new JButton(i+1+"");  
-         doors[i].addActionListener(this);
-         doorsPanel.add(doors[i]);  
+         doors[i] = new JButton (icon);
+         doorsPanel.add(doors[i]); 
+         doors[i].addActionListener(this); 
       } 
       add(doorsPanel,BorderLayout.CENTER);
       
@@ -39,42 +48,52 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       rows = dealGame.getRows(); 
       cols = dealGame.getCols();
       
-      Panel rightPanel = new Panel ();
-      rightPanel.setLayout(new GridLayout(9,1));
+      Panel bottomPanel = new Panel ();
+      bottomPanel.setLayout(new GridLayout(1,10,0,0));
       
-      rightPanel.add(new JLabel("Attempts"));
-      attempts = new TextArea("0",1,5,TextArea.SCROLLBARS_NONE);
-      rightPanel.add(attempts);
+      bottomPanel.add(new JLabel(filler));
+      
+      bottomPanel.add(new JLabel("Attempts"));
+      attempts = new TextArea("0",1,2,TextArea.SCROLLBARS_NONE);
+      bottomPanel.add(attempts);
       attempts.setEditable(false);
       
-      rightPanel.add(new JLabel(filler));
+      bottomPanel.add(new JLabel(filler));
       
-      rightPanel.add(new JLabel("Attempts Left"));
-      attemptsLeft = new TextArea("16",1,5,TextArea.SCROLLBARS_NONE);
-      rightPanel.add(attemptsLeft);
+      bottomPanel.add(new JLabel("Attempts Left"));
+      attemptsLeft = new TextArea("16",1,2,TextArea.SCROLLBARS_NONE);
+      bottomPanel.add(attemptsLeft);
       attemptsLeft.setEditable(false);
       
-      rightPanel.add(new JLabel(filler));
+      bottomPanel.add(new JLabel(filler));
       
-      rightPanel.add(new JLabel("Matches Made"));
-      matches = new TextArea("0",1,5,TextArea.SCROLLBARS_NONE); 
-      rightPanel.add(matches);
+      bottomPanel.add(new JLabel("Matches Made"));
+      matches = new TextArea("0",1,2,TextArea.SCROLLBARS_NONE); 
+      bottomPanel.add(matches);
       matches.setEditable(false);
       
-      rightPanel.add(new JLabel(filler));
-     
+      bottomPanel.add(new JLabel(filler));
       
-      add(rightPanel,BorderLayout.EAST);
-      result = new JLabel(filler);  
-      
-      Panel bottomPanel = new Panel ();
-      bottomPanel.setLayout(new GridLayout(1,1));
-      messageArea = new TextArea("    ", 10,15,TextArea.SCROLLBARS_NONE);
       add(bottomPanel,BorderLayout.SOUTH);
+
+      
+      result = new JLabel(filler); 
+      Panel topPanel = new Panel ();
+      topPanel.setLayout(new GridLayout(1,1,3,3));
+      messageArea = new TextArea("Welcome!", 1,10,TextArea.SCROLLBARS_NONE);
       messageArea.setEditable(false);
+      topPanel.add(messageArea);
+      add(topPanel,BorderLayout.NORTH);
+      
       
       setVisible(true);
    } 
+   
+   public void BoarderLayout(int hgap, int vgap){}
+   
+   public void GridLayout(int row, int columns, int hgap, int vgap){}
+   
+   public void setColor(int r, int g, int b){}     
       
    public int updateAttempts(int numAttempts){
       numAttempts++;
