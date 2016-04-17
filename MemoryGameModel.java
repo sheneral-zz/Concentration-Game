@@ -11,13 +11,15 @@ public class MemoryGameModel extends GameModel{
    public List<ImageIcon> images = new ArrayList<ImageIcon>(16);
    final int SIZE = 4;
    int numOpenDoors = 0;
-   int numAttempts = 0;
-   int numMatches = 0;
-   int turnCount = 0;
-   boolean checkMatch = false;
+   public int numAttempts = 0;
+   public int numMatches = 0;
+   public int turnCount = 0;
+   public boolean checkMatch = false;
    boolean winner = false;
    boolean turnOver = false;
    boolean gameOver = false;
+   private int choice1;
+   private int choice2;
    
    MemoryGameModel(){
     
@@ -38,14 +40,22 @@ public class MemoryGameModel extends GameModel{
       images.add(new ImageIcon("piano.png"));
       images.add(new ImageIcon("present-1.png"));
    
-   Collections.shuffle(images);
+   //Collections.shuffle(images);
    }//constructor
    
-   public void takeTurn(int buttonChoice){
-      //button choice lets this function know that a button (index of it) has been pressed
-      //passed in from ActionPerformed
-      numOpenDoors++;
-      //if matching images, match+1; need to getPatt 
+   public void takeTurn(int turn){
+      
+      if(turn%2!=0){
+         choice1=turn;
+      }
+      else{
+         choice2=turn;
+         checkMatch(choice1, choice2);
+         if(checkMatch(choice1, choice2)){
+            numMatches++;
+         }
+      }
+
       
    }//take turn        
       
@@ -91,14 +101,16 @@ public class MemoryGameModel extends GameModel{
    }
    
    int addAttempts(int turnCount){
-      //if turn%2 isn't 0, attempt isn't over
-      return(numAttempts++);
+      if (turnCount%2==0){
+         return(numAttempts++);
+      }
+      else{
+         return(numAttempts);
+      }
    }//number of attempts
    
    boolean checkMatch(int c1, int c2){
-      //if the paths of choice1 and choice2 are the same, they match, numMatches+1
-      //if paths don't match, they don't match
-      if (images.get(c2).equals(images.get(c2))){
+      if (images.get(c1).equals(images.get(c2))){
          return(true);
       }
       else{
