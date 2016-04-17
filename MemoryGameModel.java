@@ -22,23 +22,32 @@ public class MemoryGameModel extends GameModel{
    private int choice2;
    
    MemoryGameModel(){
+      ImageIcon candle = new ImageIcon("candle.png");
+      ImageIcon balloons = new ImageIcon("balloons.png");
+      ImageIcon birthdayGirl = new ImageIcon("birthday-girl.png");
+      ImageIcon candy = new ImageIcon("candy.png");
+      ImageIcon hamburger = new ImageIcon("hamburger.png");
+      ImageIcon musicalNote = new ImageIcon("musical-note.png");
+      ImageIcon piano = new ImageIcon("piano.png");
+      ImageIcon present1 = new ImageIcon("present-1.png");
     
-      images.add(new ImageIcon("balloons.png"));
-      images.add(new ImageIcon("birthday-girl.png"));
-      images.add(new ImageIcon("candle.png"));
-      images.add(new ImageIcon("candy.png"));
-      images.add(new ImageIcon("hamburger.png"));
-      images.add(new ImageIcon("musical-note.png"));
-      images.add(new ImageIcon("piano.png"));
-      images.add(new ImageIcon("present-1.png"));
-      images.add(new ImageIcon("balloons.png"));
-      images.add(new ImageIcon("birthday-girl.png"));
-      images.add(new ImageIcon("candle.png"));
-      images.add(new ImageIcon("candy.png"));
-      images.add(new ImageIcon("hamburger.png"));
-      images.add(new ImageIcon("musical-note.png"));
-      images.add(new ImageIcon("piano.png"));
-      images.add(new ImageIcon("present-1.png"));   
+      images.add(balloons);
+      images.add(birthdayGirl);
+      images.add(candle);
+      images.add(candy);
+      images.add(hamburger);
+      images.add(musicalNote);
+      images.add(piano);
+      images.add(present1);
+      images.add(balloons);
+      images.add(birthdayGirl);
+      images.add(candle);
+      images.add(candy);
+      images.add(hamburger);
+      images.add(musicalNote);
+      images.add(piano);
+      images.add(present1); 
+        
    //Collections.shuffle(images);
    }//constructor
    

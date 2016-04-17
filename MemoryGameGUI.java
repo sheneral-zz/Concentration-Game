@@ -73,7 +73,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       bottomPanel.add(new JLabel(filler));
       
       bottomPanel.add(new JLabel("Matches Made"));
-      matches = new TextArea("10",1,2,TextArea.SCROLLBARS_NONE); 
+      matches = new TextArea("0",1,2,TextArea.SCROLLBARS_NONE); 
       bottomPanel.add(matches);
       matches.setEditable(false);
       
@@ -86,7 +86,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       Panel topPanel = new Panel ();
       topPanel.setLayout(new GridLayout(1,1,3,3));
       topPanel.setBackground(new Color(150,130,150));
-      messageArea = new TextArea("Welcome my friend!", 1,10,TextArea.SCROLLBARS_NONE);
+      messageArea = new TextArea("Welcome!", 1,10,TextArea.SCROLLBARS_NONE);
       messageArea.setEditable(false);
       topPanel.add(messageArea);
       add(topPanel,BorderLayout.NORTH);
@@ -159,9 +159,10 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       doors[i].setIcon(dealGame.get(i));
       dealGame.takeTurn(i);
       
-      updateMatchesCount(4);
-      //updateMatchesCount(dealGame.getNumMatches());
-      messageMatches(checkMatch);
+      if(turnCount%2==0){
+         updateMatchesCount(dealGame.getNumMatches());
+         //messageMatches(checkMatch);
+      }
 
    }//action performed
 }
