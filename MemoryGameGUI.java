@@ -22,7 +22,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
    public MemoryGameGUI(){
       setTitle("4x4 Memory Game");
       setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-      setColor(1,200,1);
+      
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       
       // set layout and borders 
@@ -35,7 +35,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       
       Panel doorsPanel = new Panel ();
       doorsPanel.setLayout(new GridLayout(4,4,5,5));
-      
+      doorsPanel.setBackground(new Color(150,200,150));
       
       for(int i=0;i<16;i++){
          doors[i] = new JButton (icon);
@@ -50,6 +50,8 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       
       Panel bottomPanel = new Panel ();
       bottomPanel.setLayout(new GridLayout(1,10,0,0));
+      bottomPanel.setBackground(new Color(150,230,150));
+
       
       bottomPanel.add(new JLabel(filler));
       
@@ -80,6 +82,9 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       result = new JLabel(filler); 
       Panel topPanel = new Panel ();
       topPanel.setLayout(new GridLayout(1,1,3,3));
+      topPanel.setBackground(new Color(150,130,150));
+
+      
       messageArea = new TextArea("Welcome!", 1,10,TextArea.SCROLLBARS_NONE);
       messageArea.setEditable(false);
       topPanel.add(messageArea);
@@ -92,9 +97,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
    public void BoarderLayout(int hgap, int vgap){}
    
    public void GridLayout(int row, int columns, int hgap, int vgap){}
-   
-   public void setColor(int r, int g, int b){}     
-      
+         
    public int updateAttempts(int numAttempts){
       numAttempts++;
       String s = numAttempts+"";
