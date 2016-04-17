@@ -73,7 +73,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       bottomPanel.add(new JLabel(filler));
       
       bottomPanel.add(new JLabel("Matches Made"));
-      matches = new TextArea("0",1,2,TextArea.SCROLLBARS_NONE); 
+      matches = new TextArea("10",1,2,TextArea.SCROLLBARS_NONE); 
       bottomPanel.add(matches);
       matches.setEditable(false);
       
@@ -86,9 +86,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       Panel topPanel = new Panel ();
       topPanel.setLayout(new GridLayout(1,1,3,3));
       topPanel.setBackground(new Color(150,130,150));
-
-      
-      messageArea = new TextArea("Welcome!", 1,10,TextArea.SCROLLBARS_NONE);
+      messageArea = new TextArea("Welcome my friend!", 1,10,TextArea.SCROLLBARS_NONE);
       messageArea.setEditable(false);
       topPanel.add(messageArea);
       add(topPanel,BorderLayout.NORTH);
@@ -100,22 +98,18 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
    public void BoarderLayout(int hgap, int vgap){}
    
    public void GridLayout(int row, int columns, int hgap, int vgap){}
-         
-   public int updateAttempts(int numAttempts){
-     //incrementing attempts is ActionPerformed's job, not this function's job SG
+   
+   public void updateAttempts(int numAttempts){
+     //incrementing attempts is ActionPerformed's job, not this function's job - SG
       String s = numAttempts+"";
       attempts.setText(s);
-      return numAttempts;
-   }
+   }//update attempts
    
       
-   public void updateMatchesCount(boolean checkMatch){
-      if(checkMatch){
-         numMatches++;
-      }
-      String s = numMatches+"";
-      matches.setText(s);
-      
+   public void updateMatchesCount(int numMatches){
+      //this function only converts number of matches to display it as string - SG
+      String m = numMatches+"";
+      matches.setText(m);
    }//update match count
    
    public void messageMatches(boolean checkMatch){
@@ -127,7 +121,9 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       }
    }//msg matches
    
-   //I rewrote updateFoundMatches into two different functions: one updating message, one updating match count (shown above)
+   //I rewrote updateFoundMatches below into two different functions:
+   //one updating message, one updating match count (shown above)
+   //the function below is trying to do too much work - SG
    /*
    public int updateFoundMatches(int numMatches, boolean checkMatch){
       if (checkMatch == true){
@@ -143,12 +139,11 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
    } */
 
 
-   public int updateAttemptsLeft(int attempts){
+   public void updateAttemptsLeft(int attempts){
       int numAttemptsLeft = 16-attempts;
-      //changed code above bc originally it was just subtracting 1 attempt, which is not how it works SG
+      //changed code above bc originally it was just subtracting 1 attempt, which this function should not keep track - SG
       String s = numAttemptsLeft+"";
       attemptsLeft.setText(s);
-      return numAttemptsLeft;
    }
 
    public void actionPerformed(ActionEvent click){
@@ -161,10 +156,11 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       while(buttonClicked != doors[i]){
          i++; 
       }//while finding source
-      doors[i].setIcon(dealGame.get(i));            
-      dealGame.takeTurn(turnCount);
+      doors[i].setIcon(dealGame.get(i));
+      dealGame.takeTurn(i);
       
-      updateMatchesCount(checkMatch);
+      updateMatchesCount(4);
+      //updateMatchesCount(dealGame.getNumMatches());
       messageMatches(checkMatch);
 
    }//action performed

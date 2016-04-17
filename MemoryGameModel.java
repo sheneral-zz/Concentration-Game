@@ -38,39 +38,32 @@ public class MemoryGameModel extends GameModel{
       images.add(new ImageIcon("hamburger.png"));
       images.add(new ImageIcon("musical-note.png"));
       images.add(new ImageIcon("piano.png"));
-      images.add(new ImageIcon("present-1.png"));
-   
+      images.add(new ImageIcon("present-1.png"));   
    //Collections.shuffle(images);
    }//constructor
    
-   public void takeTurn(int turn){
-      
-      if(turn%2!=0){
-         choice1=turn;
+   public void takeTurn(int i){
+      if(!turnOver){
+         choice1=i;
       }
       else{
-         choice2=turn;
-         checkMatch(choice1, choice2);
+         choice2=i;
          if(checkMatch(choice1, choice2)){
             numMatches++;
          }
       }
-
-      
-   }//take turn        
-      
-   boolean turnOverStatus(){
-      if (numOpenDoors == 2) //need new condition that accounts for opened doors that match
-         return(true);
-      else
-         return(false); 
-   }//1 turn over
+      turnOver = !turnOver;
+   }//take turn     
+   
+   public int getNumMatches(){
+      return(numMatches);
+   }//get num matches   
    
    boolean gameOverStatus(){
       if (numAttempts == 10 || numMatches == 8){
          return(true);}
       else{
-         return(false); }
+         return(false);}
    }//game over
    
    public ImageIcon get(int i){
@@ -120,6 +113,5 @@ public class MemoryGameModel extends GameModel{
    
    //function: get number of attempts to keep track
    //function: keep track of number of matches
-   //talk to GUI for above
 
 }//class
