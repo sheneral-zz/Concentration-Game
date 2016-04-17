@@ -5,19 +5,22 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import java.awt.Color;
 
-
 public class MemoryGameGUI extends JFrame implements ActionListener{
      
-   private final int WINDOW_WIDTH = 900;  // Window width
+   private final int WINDOW_WIDTH = 600;  // Window width
    private final int WINDOW_HEIGHT = 600; // Window height
    private TextArea messageArea, attempts, attemptsLeft, matches;
    private int rows=0;
    private int cols = 0; 
    private JButton [] doors  = new JButton[16];
-   private GameModel dealGame; 
+   private MemoryGameModel dealGame; 
    private String filler = " "; 
    private JLabel result; 
    private ImageIcon icon = new ImageIcon ("front.png");
+   private ImageIcon[] imagePair = new ImageIcon[2];
+   private int turnCount=0;
+   private boolean checkMatch;
+   private int numMatches;
 
    public MemoryGameGUI(){
       setTitle("4x4 Memory Game");
@@ -83,8 +86,6 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       Panel topPanel = new Panel ();
       topPanel.setLayout(new GridLayout(1,1,3,3));
       topPanel.setBackground(new Color(150,130,150));
-
-      
       messageArea = new TextArea("Welcome!", 1,10,TextArea.SCROLLBARS_NONE);
       messageArea.setEditable(false);
       topPanel.add(messageArea);
@@ -97,15 +98,33 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
    public void BoarderLayout(int hgap, int vgap){}
    
    public void GridLayout(int row, int columns, int hgap, int vgap){}
-         
-   public int updateAttempts(int numAttempts){
-      numAttempts++;
+   
+   public void updateAttempts(int numAttempts){
+     //incrementing attempts is ActionPerformed's job, not this function's job - SG
       String s = numAttempts+"";
       attempts.setText(s);
-      return numAttempts;
-   }
-
-
+   }//update attempts
+   
+      
+   public void updateMatchesCount(int numMatches){
+      //this function only converts number of matches to display it as string - SG
+      String m = numMatches+"";
+      matches.setText(m);
+   }//update match count
+   
+   public void messageMatches(boolean checkMatch){
+      if(checkMatch){
+         result.setText("Match found!");
+      }
+      else{
+         result.setText("Not a match!");
+      }
+   }//msg matches
+   
+   //I rewrote updateFoundMatches below into two different functions:
+   //one updating message, one updating match count (shown above)
+   //the function below is trying to do too much work - SG
+   /*
    public int updateFoundMatches(int numMatches, boolean checkMatch){
       if (checkMatch == true){
          result.setText("match found");
@@ -117,29 +136,33 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
          result.setText("not a match");
       }
       return numMatches;
-   }
+   } */
 
 
-   public int updateAttemptsLeft(int numAttemptsLeft){
-      numAttemptsLeft--;
+   public void updateAttemptsLeft(int attempts){
+      int numAttemptsLeft = 16-attempts;
+      //changed code above bc originally it was just subtracting 1 attempt, which this function should not keep track - SG
       String s = numAttemptsLeft+"";
       attemptsLeft.setText(s);
-      return numAttemptsLeft;
    }
 
-      
-      //temporary action performed below S.G.     
    public void actionPerformed(ActionEvent click){
-   
-      JButton buttonClicked = (JButton)click.getSource(); 
+      JButton buttonClicked = (JButton)click.getSource();
+      int attempts=dealGame.addAttempts(turnCount);
+      updateAttempts(attempts);
+      updateAttemptsLeft(attempts);
+      turnCount++;
       int i=0;
       while(buttonClicked != doors[i]){
          i++; 
-      }
-      dealGame.takeTurn(i); 
-         
+      }//while finding source
       doors[i].setIcon(dealGame.get(i));
-   
-      doors[i].removeActionListener(this);
-   }
+      dealGame.takeTurn(i);
+      
+      if(turnCount%2==0){
+         updateMatchesCount(dealGame.getNumMatches());
+         //messageMatches(checkMatch);
+      }
+
+   }//action performed
 }
