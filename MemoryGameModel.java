@@ -8,6 +8,21 @@ import javax.imageio.ImageIO;
 
 public class MemoryGameModel extends GameModel{
 
+<<<<<<< HEAD
+   public List<ImageIcon> images = new ArrayList<ImageIcon>(16);
+   final int SIZE = 4;
+   int numOpenDoors = 0;
+   public int numAttempts = 0;
+   public int numMatches = 0;
+   public int turnCount = 0;
+   public boolean checkMatch = false;
+   boolean winner = false;
+   boolean turnOver = false;
+   boolean gameOver = false;
+   boolean matchStatus = true;
+   private int choice1;
+   private int choice2;
+=======
    
    private final int matchTotal = 8;
    private List<ImageIcon> images = new ArrayList<ImageIcon>(matchTotal *2);
@@ -15,8 +30,10 @@ public class MemoryGameModel extends GameModel{
    private int numAttempts = 0;
    private int matchCount = 0;
    private int attemptsRemaining = 16;
+>>>>>>> origin/master
    
    MemoryGameModel(){
+   
       ImageIcon candle = new ImageIcon("candle.png");
       ImageIcon balloons = new ImageIcon("balloons.png");
       ImageIcon birthdayGirl = new ImageIcon("birthday-girl.png");
@@ -43,9 +60,45 @@ public class MemoryGameModel extends GameModel{
       images.add(piano);
       images.add(present1); 
         
+<<<<<<< HEAD
+   //Collections.shuffle(images);
+   }//constructor
+   
+   public void takeTurn(int i){
+      if(!turnOver){
+         choice1=i;
+      }
+      else{
+         choice2=i;
+         if(checkMatch(choice1, choice2)){
+            numMatches++;
+         }
+         else{
+            matchStatus=false;
+         }
+      }
+      turnOver = !turnOver;
+   }//take turn     
+   
+   public int getNumMatches(){
+      return(numMatches);
+   }//get num matches   
+   
+   public boolean getMatchStatus(){
+      return(matchStatus);
+   }//
+   
+   boolean gameOverStatus(){
+      if (numAttempts == 16 || numMatches == 8){
+         return(true);}
+      else{
+         return(false);}
+   }//game over
+=======
         Collections.shuffle(images);
    }
         
+>>>>>>> origin/master
    
    public int getMatchCount(){
       return matchCount;
