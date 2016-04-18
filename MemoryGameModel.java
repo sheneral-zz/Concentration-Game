@@ -18,10 +18,12 @@ public class MemoryGameModel extends GameModel{
    boolean winner = false;
    boolean turnOver = false;
    boolean gameOver = false;
+   boolean matchStatus = true;
    private int choice1;
    private int choice2;
    
    MemoryGameModel(){
+   
       ImageIcon candle = new ImageIcon("candle.png");
       ImageIcon balloons = new ImageIcon("balloons.png");
       ImageIcon birthdayGirl = new ImageIcon("birthday-girl.png");
@@ -59,6 +61,10 @@ public class MemoryGameModel extends GameModel{
          choice2=i;
          if(checkMatch(choice1, choice2)){
             numMatches++;
+            matchStatus=true;
+         }
+         else{
+            matchStatus=false;
          }
       }
       turnOver = !turnOver;
@@ -68,8 +74,12 @@ public class MemoryGameModel extends GameModel{
       return(numMatches);
    }//get num matches   
    
+   public boolean getMatchStatus(){
+      return(matchStatus);
+   }//
+   
    boolean gameOverStatus(){
-      if (numAttempts == 10 || numMatches == 8){
+      if (numAttempts == 16 || numMatches == 8){
          return(true);}
       else{
          return(false);}

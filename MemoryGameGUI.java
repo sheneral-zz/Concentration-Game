@@ -173,10 +173,15 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       }
       doors[i].setIcon(dealGame.get(i));
       dealGame.takeTurn(i);
+      /*
+      if(!dealGame.getMatchStatus()){
+         doors[i].removeActionListener(this);
+      }
+      */
       
       if(turnCount%2==0){
          updateMatchesCount(dealGame.getNumMatches());
-         messageMatches(dealGame.gameOverStatus());
+         messageMatches(dealGame.getMatchStatus());
       }//big if
       
       if(dealGame.gameOverStatus()){
@@ -190,8 +195,6 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       if(command.equals("reset")){
          resetGame();
       }
-      
-      
    }//action performed
    
 
