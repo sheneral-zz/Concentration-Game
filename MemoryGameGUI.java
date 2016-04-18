@@ -176,7 +176,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       
       if(turnCount%2==0){
          updateMatchesCount(dealGame.getNumMatches());
-         messageMatches(dealGame.getMatchStatus());
+         messageMatches(dealGame.gameOverStatus());
       }//big if
       
       if(dealGame.gameOverStatus()){
