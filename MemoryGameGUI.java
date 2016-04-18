@@ -155,13 +155,23 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       int i=0;
       while(buttonClicked != doors[i]){
          i++; 
-      }//while finding source
+      }
       doors[i].setIcon(dealGame.get(i));
       dealGame.takeTurn(i);
+      /*
+      if(!dealGame.getMatchStatus()){
+         doors[i].removeActionListener(this);
+      }
+      */
       
       if(turnCount%2==0){
          updateMatchesCount(dealGame.getNumMatches());
+
          //messageMatches(checkMatch);
+      }
+      
+      if(dealGame.gameOverStatus()){
+         result.setText("Game over! ");
       }
 
    }//action performed
