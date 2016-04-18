@@ -7,12 +7,14 @@ import java.awt.Color;
 
 public class MemoryGameGUI extends JFrame implements ActionListener{
      
-   private final int WINDOW_WIDTH = 600;  // Window width
+   private final int WINDOW_WIDTH = 900;  
+   // Window width wide enough to not need to manually expand view to read all labels 
    private final int WINDOW_HEIGHT = 600; // Window height
-   private TextArea messageArea, attempts, attemptsLeft, matches;
    private int rows=0;
-   private int cols = 0; 
+   private int cols = 0;
+   private TextArea messageArea, attempts, attemptsLeft, matches;
    private JButton [] doors  = new JButton[16];
+   private JButton reset = new JButton();
    private MemoryGameModel dealGame; 
    private String filler = " "; 
    private JLabel result; 
@@ -54,10 +56,8 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       Panel bottomPanel = new Panel ();
       bottomPanel.setLayout(new GridLayout(1,10,0,0));
       bottomPanel.setBackground(new Color(150,230,150));
-
       
-      bottomPanel.add(new JLabel(filler));
-      
+            
       bottomPanel.add(new JLabel("Attempts"));
       attempts = new TextArea("0",1,2,TextArea.SCROLLBARS_NONE);
       bottomPanel.add(attempts);
@@ -78,6 +78,8 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       matches.setEditable(false);
       
       bottomPanel.add(new JLabel(filler));
+      
+      bottomPanel.add(new JButton("Reset"));
       
       add(bottomPanel,BorderLayout.SOUTH);
 
@@ -141,11 +143,38 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
 
    public void updateAttemptsLeft(int attempts){
       int numAttemptsLeft = 16-attempts;
-      //changed code above bc originally it was just subtracting 1 attempt, which this function should not keep track - SG
       String s = numAttemptsLeft+"";
       attemptsLeft.setText(s);
    }
+   
+   public void resetDoors(){
+      for (int i=0;i<15;i++){
+         //doors[i].addActionListener(this);
+         doors[i].setIcon(icon);
+      }
+   }
+   
+   public int resetAttempts(int numAttempts){
+      numAttempts = 0;
+      String s = numAttempts+"";
+      attempts.setText(s);
+      return numAttempts;
+   }
 
+   public int resetAttemptsLeft(int numAttemptsLeft){
+      numAttemptsLeft = 0;
+      String s = numAttemptsLeft+"";
+      attemptsLeft.setText(s);
+      return numAttemptsLeft;
+   }
+   
+   public int resetMatches(int numMatches){
+      numMatches = 0;
+      String s = numMatches+"";
+      matches.setText(s);
+      return numMatches;
+   }
+   
    public void actionPerformed(ActionEvent click){
       JButton buttonClicked = (JButton)click.getSource();
       int attempts=dealGame.addAttempts(turnCount);
@@ -158,6 +187,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       }//while finding source
       doors[i].setIcon(dealGame.get(i));
       dealGame.takeTurn(i);
+     
       
       if(turnCount%2==0){
          updateMatchesCount(dealGame.getNumMatches());
