@@ -4,6 +4,7 @@ import java.awt.event.*;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 public class MemoryGameGUI extends JFrame implements ActionListener{
      
@@ -12,17 +13,16 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
    private final int WINDOW_HEIGHT = 600; // Window height
    private int rows=0;
    private int cols = 0;
-   private TextArea messageArea, attempts, attemptsLeft, matches;
+   private TextArea messageArea, attempts, attemptsLeft, matches, result;
    private JButton [] doors  = new JButton[16];
    private JButton reset = new JButton();
    private MemoryGameModel dealGame; 
-   private String filler = " "; 
-   private JLabel result; 
+   private String filler = " ";  
    private ImageIcon icon = new ImageIcon ("front.png");
-   private ImageIcon[] imagePair = new ImageIcon[2];
    private int turnCount=0;
-   private boolean checkMatch;
    private int numMatches;
+   private int attemptsInt=0;
+   private int attemptsLeftInt=16;
 
    public MemoryGameGUI(){
       setTitle("4x4 Memory Game");
@@ -57,7 +57,6 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       bottomPanel.setLayout(new GridLayout(1,10,0,0));
       bottomPanel.setBackground(new Color(150,230,150));
       
-            
       bottomPanel.add(new JLabel("Attempts"));
       attempts = new TextArea("0",1,2,TextArea.SCROLLBARS_NONE);
       bottomPanel.add(attempts);
@@ -72,19 +71,18 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       
       bottomPanel.add(new JLabel(filler));
       
-      bottomPanel.add(new JLabel("Matches Made"));
+      bottomPanel.add(new JLabel("Matches"));
       matches = new TextArea("0",1,2,TextArea.SCROLLBARS_NONE); 
       bottomPanel.add(matches);
       matches.setEditable(false);
       
+      result = new TextArea("Results", 1,10,TextArea.SCROLLBARS_NONE);
       bottomPanel.add(new JLabel(filler));
-      
       bottomPanel.add(new JButton("Reset"));
+      bottomPanel.add(result);
       
       add(bottomPanel,BorderLayout.SOUTH);
-
-      
-      result = new JLabel(filler); 
+    
       Panel topPanel = new Panel ();
       topPanel.setLayout(new GridLayout(1,1,3,3));
       topPanel.setBackground(new Color(150,130,150));
@@ -106,7 +104,6 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       String s = numAttempts+"";
       attempts.setText(s);
    }//update attempts
-   
       
    public void updateMatchesCount(int numMatches){
       //this function only converts number of matches to display it as string - SG
@@ -122,24 +119,6 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
          result.setText("Not a match!");
       }
    }//msg matches
-   
-   //I rewrote updateFoundMatches below into two different functions:
-   //one updating message, one updating match count (shown above)
-   //the function below is trying to do too much work - SG
-   /*
-   public int updateFoundMatches(int numMatches, boolean checkMatch){
-      if (checkMatch == true){
-         result.setText("match found");
-         numMatches++;
-         String s = numMatches+"";
-         matches.setText(s);
-      }
-      else{
-         result.setText("not a match");
-      }
-      return numMatches;
-   } */
-
 
    public void updateAttemptsLeft(int attempts){
       int numAttemptsLeft = 16-attempts;
@@ -147,13 +126,19 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       attemptsLeft.setText(s);
    }
    
-   public void resetDoors(){
+   public void resetGame(){
       for (int i=0;i<15;i++){
          //doors[i].addActionListener(this);
          doors[i].setIcon(icon);
       }
+      attemptsInt=0;
+      numMatches=0;
+      updateAttempts(0);
+      updateAttemptsLeft(16); 
    }
    
+   /* the functions below are kind of repetitive, since they're mostly just converting to string
+   which updateAttempts and updateAttemptsLeft already do
    public int resetAttempts(int numAttempts){
       numAttempts = 0;
       String s = numAttempts+"";
@@ -174,25 +159,40 @@ public class MemoryGameGUI extends JFrame implements ActionListener{
       matches.setText(s);
       return numMatches;
    }
+   */
    
    public void actionPerformed(ActionEvent click){
       JButton buttonClicked = (JButton)click.getSource();
-      int attempts=dealGame.addAttempts(turnCount);
-      updateAttempts(attempts);
-      updateAttemptsLeft(attempts);
+      attemptsInt=dealGame.addAttempts(turnCount);
+      updateAttempts(attemptsInt);
+      updateAttemptsLeft(attemptsInt);
       turnCount++;
       int i=0;
       while(buttonClicked != doors[i]){
          i++; 
-      }//while finding source
+      }
       doors[i].setIcon(dealGame.get(i));
       dealGame.takeTurn(i);
-     
       
       if(turnCount%2==0){
          updateMatchesCount(dealGame.getNumMatches());
-         //messageMatches(checkMatch);
+         messageMatches(dealGame.getMatchStatus());
+      }//big if
+      
+      if(dealGame.gameOverStatus()){
+         //small bug: gameOverStatus evaluates to true at the beginning of the 16th attempt, not after
+         String gameOver = ("Game over! Thanks for playing! ");
+         JOptionPane.showMessageDialog(null, gameOver);
+         System.exit(0); //exits the game
       }
-
+      
+      String command = click.getActionCommand();
+      if(command.equals("reset")){
+         resetGame();
+      }
+      
+      
    }//action performed
+   
+
 }
